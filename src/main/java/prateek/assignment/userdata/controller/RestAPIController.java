@@ -15,11 +15,11 @@ import java.util.Map;
 @RestController
 public class RestAPIController {
 
-    
-    private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository
 
     @Autowired
-    private UserService userService;
+    private UserService userService
 
     @GetMapping("/rest/get-all")
     public ResponseEntity<List<User>> getAllUsers() {
