@@ -4,13 +4,32 @@ pipeline {
     tools {
         maven "maven"
     }
-
+   
     stages {
         stage("Build") {
-            steps {
+           
+        node 
+        {
+          try 
+            {   
                 sh "mvn -version"
                 sh "mvn clean install"
+            } 
+          catch (e)
+            {
+                currentBuild.result = "FAILED"
+                notifyFailed()
+                throw e
             }
+        }
+
+
+
+        def notifyFailed() {
+
+           mail bcc: '', body: "<b>Build Is Failed</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "ERROR CI: Project name -> ${env.JOB_NAME}", to: "kajal.gupta@anchanto.com"; 
+        }
+           
         }
 
         stage("Kill Server") {
@@ -41,11 +60,6 @@ pipeline {
         always {
             cleanWs()
         }
-        success {  
-             echo 'This will run only if successful'  
-         }  
-         failure {  
-             mail bcc: '', body: "<b>Build Is Failed</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "ERROR CI: Project name -> ${env.JOB_NAME}", to: "kajal.gupta@anchanto.com";  
-         }  
+       
     }
 }
