@@ -8,16 +8,18 @@ pipeline {
    
     stages {
         stage("Build") {
-           script {
-              try {
-                    sh "mvn -version"
-                    sh "mvn clean install"
-                    echo "do your stuff"
-              } 
-              catch (Exception e) {
-                  echo "Ended the never ending stage and proceeding to the next stage"
-              }
-            }  
+           steps{
+              script {
+                  try {
+                        sh "mvn -version"
+                        sh "mvn clean install"
+                        echo "do your stuff"
+                  } 
+                  catch (Exception e) {
+                      echo "Ended the never ending stage and proceeding to the next stage"
+                  }
+                }  
+           }
         }
 
         stage("Kill Server") {
