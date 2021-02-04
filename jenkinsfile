@@ -16,14 +16,14 @@ pipeline {
         stage("Kill Server") {
             steps {
                 sh '''#!/bin/bash
-                    process=$(lsof -t -i:8080)
+                    process=$(lsof -t -i:8383)
                     echo $process
                     
                     if [ -z "$process" ]
                     then
-                        echo "No process at port 8080"
+                        echo "No process at port 8383"
                     else
-                        echo "Killing process at port 8080"
+                        echo "Killing process at port 8383"
                         kill $process
                     fi
                 '''
@@ -33,7 +33,7 @@ pipeline {
         stage("Deploy") {
             steps {
                 withEnv(["JENKINS_NODE_COOKIE=dontkill"]) {
-                    sh "nohup mvn spring-boot:run -D server.port=8080 &"
+                    sh "nohup mvn spring-boot:run -D server.port=8383 &"
                 }
             }
         }
