@@ -18,17 +18,10 @@ pipeline {
           catch (e)
             {
                 currentBuild.result = "FAILED"
-                notifyFailed()
+                mail bcc: '', body: "<b>Build Is Failed</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "ERROR CI: Project name -> ${env.JOB_NAME}", to: "kajal.gupta@anchanto.com"; 
                 throw e
             }
-        }
-
-
-
-        def notifyFailed() {
-
-           mail bcc: '', body: "<b>Build Is Failed</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "ERROR CI: Project name -> ${env.JOB_NAME}", to: "kajal.gupta@anchanto.com"; 
-        }
+        }  
            
         }
 
@@ -63,3 +56,10 @@ pipeline {
        
     }
 }
+
+  def notifyFailed() {
+
+           mail bcc: '', body: "<b>Build Is Failed</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "ERROR CI: Project name -> ${env.JOB_NAME}", to: "kajal.gupta@anchanto.com"; 
+        }
+           
+        }
