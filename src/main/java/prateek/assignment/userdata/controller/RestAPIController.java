@@ -15,7 +15,7 @@ import java.util.Map;
 @RestController
 public class RestAPIController {
 
-    @Autowired
+    
     private UserRepository userRepository;
 
     @Autowired
