@@ -36,8 +36,7 @@ pipeline {
         stage("Deploy") {
             steps {
                 withEnv(["JENKINS_NODE_COOKIE=dontkill"]) {
-                    sh "nohup mvn spring-boot:run -D            
-                                  server.port=${PORT} &"
+                    sh "nohup mvn spring-boot:run -D server.port=${PORT} &"
                 }
             }
         }
