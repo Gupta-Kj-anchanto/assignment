@@ -2,7 +2,7 @@
 pipeline {
     agent any
     environment {
-      PORT = '8383'
+      PORT = "8383"
     }
     tools {
         maven "maven"
