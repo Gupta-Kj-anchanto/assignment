@@ -1,6 +1,9 @@
+
 pipeline {
     agent any
-
+    enviornment {
+      PORT = 8383
+    }
     tools {
         maven "maven"
     }
@@ -16,14 +19,14 @@ pipeline {
         stage("Kill Server") {
             steps {
                 sh '''#!/bin/bash
-                    process=$(lsof -t -i:8383)
+                    process=$(lsof -t -i:${PORT})
                     echo $process
                     
                     if [ -z "$process" ]
                     then
-                        echo "No process at port 8383"
+                        echo "No process at port ${PORT}"
                     else
-                        echo "Killing process at port 8383"
+                        echo "Killing process at port ${PORT}"
                         kill $process
                     fi
                 '''
@@ -33,7 +36,8 @@ pipeline {
         stage("Deploy") {
             steps {
                 withEnv(["JENKINS_NODE_COOKIE=dontkill"]) {
-                    sh "nohup mvn spring-boot:run -D server.port=8383 &"
+                    sh "nohup mvn spring-boot:run -D            
+                                  server.port=${PORT} &"
                 }
             }
         }
@@ -42,7 +46,7 @@ pipeline {
 
     post {
        failure {  
-             mail bcc: '', body: "<b>Example</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "ERROR CI: Project name -> ${env.JOB_NAME}", to: "foo@foomail.com";  
+             mail bcc: '', body: "<b>Example</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "ERROR CI: Project name -> ${env.JOB_NAME}", to: "Reciever@Email.com";  
          }
        
     }
