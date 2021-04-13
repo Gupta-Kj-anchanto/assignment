@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import prateek.assignment.userdata.entity.User;
 import prateek.assignment.userdata.interfaces.UserService;
 import prateek.assignment.userdata.model.Login;
-import prateek.assignment.userdata.repository.UserRepository;
+import prateek.assignment.userdata.repository.UserRepository
 import java.util.HashMap;
 import java.util.List
 import java.util.Map
