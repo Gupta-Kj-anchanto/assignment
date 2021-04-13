@@ -10,13 +10,13 @@ import prateek.assignment.userdata.model.Login;
 import prateek.assignment.userdata.repository.UserRepository;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map
+import java.util.Map;
 
 @RestController
 public class RestAPIController {
 
     @Autowired
-    private UserRepository userRepository
+    private UserRepository userRepository;
 
     @Autowired
     private UserService userService;
