@@ -21,7 +21,7 @@ public class RestAPIController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/rest/get-All")
+    @GetMapping("/rest/getAll")
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUsers());
     }
